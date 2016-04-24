@@ -1,4 +1,4 @@
 
 public class Taki {
-	private String bla;
+	private String t;
 }

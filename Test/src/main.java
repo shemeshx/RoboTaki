@@ -5,6 +5,7 @@ public class main {
 		// TODO Auto-generated method stub
 		System.out.println("hi1");
 		Taki t;
+		Taki t2;
 	}
 
 }
