@@ -13,16 +13,15 @@ public class deckHand {
 	public deckHand() {
 		this.hand=new LinkedList<Card>();
 	}
-	public void Init()
+	public void Init(String [] cards)
 	/*
 	 * this method init the robot with 8 cards.
+	 * takes 8 strings and change them to cards.
 	 */
 	{
-		System.out.println("Please enter 8 new card for begining: ");
 		for(int i=0;i<8;i++)
 		{
-			hand.addFirst(getCardByString(new Scanner(System.in).nextLine()) );
-			System.out.println(hand.getFirst());
+			hand.addFirst(getCardByString(cards[i]) );
 		}
 	}
 	public Card getCardByString(String str)
