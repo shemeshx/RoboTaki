@@ -7,6 +7,7 @@ public class main {
 		
 		deckHand d =new deckHand();
 		d.Init(new String[8]);
+
 	}
 
 }
