@@ -6,7 +6,7 @@ public class main {
 		// TODO Auto-generated method stub
 		
 		deckHand d =new deckHand();
-		d.Init();
+		d.Init(new String[8]);
 	}
 
 }
