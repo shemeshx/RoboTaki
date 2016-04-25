@@ -12,4 +12,5 @@ public abstract class Card {
 	public abstract void setType(cardType type);
 	
 	
+	
 }

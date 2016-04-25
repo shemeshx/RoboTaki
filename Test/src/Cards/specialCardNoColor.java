@@ -18,4 +18,9 @@ public class specialCardNoColor extends Card {
 		this.type=type;
 	}
 
+	@Override
+	public String toString() {
+		return "specialCardNoColor [type=" + type + "]";
+	}
+	
 }

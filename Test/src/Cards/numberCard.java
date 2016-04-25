@@ -4,6 +4,8 @@ package Cards;
  */
 public class numberCard extends Card{
 
+	
+
 	private int number;
 	private Colors color;
 	
@@ -36,6 +38,11 @@ public class numberCard extends Card{
 
 	public void setColor(Colors color) {
 		this.color = color;
+	}
+
+	@Override
+	public String toString() {
+		return "numberCard [number=" + number + ", color=" + color + ", type=" + type + "]";
 	}
 	
 }

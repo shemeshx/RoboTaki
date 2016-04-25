@@ -28,4 +28,9 @@ public class specialCardColor extends Card{
 		this.type=type;
 	}
 
+	@Override
+	public String toString() {
+		return "specialCardColor [color=" + color + ", type=" + type + "]";
+	}
+	
 }
