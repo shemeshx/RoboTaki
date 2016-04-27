@@ -1,5 +1,6 @@
 package Game;
 import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 import Cards.*;
@@ -34,7 +35,6 @@ public class deckHand {
 		{
 			int num=Character.getNumericValue(str.charAt(0));
 			c = new numberCard(num,Colors.valueOf( str.substring(2, str.length())));
-			System.out.println(c);
 		}
 		else if (str.indexOf(" ")!=-1)// if it is special color card such as PLUS RED ...
 		{
@@ -45,5 +45,29 @@ public class deckHand {
 			c=new specialCardNoColor(cardType.valueOf(str.substring(0,str.length())));
 
 		return c;
+	}
+	public LinkedList<Card> getHand()
+	{
+		return this.hand;
+	}
+	public String toString()
+	{
+		String str="hand:\n";
+		LinkedList<Card> str2=copyList(this.hand);
+		while(!str2.isEmpty())
+		{
+			str=str+str2.getFirst().toString()+"   ,";
+			str2.removeFirst();
+		}
+		return str;
+	}
+	public LinkedList<Card> copyList(LinkedList<Card> list){
+		LinkedList<Card> newList=new LinkedList<Card>();
+		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
+			Card card=iter.next();
+			newList.addLast(card);
+			}
+		return newList;
+		
 	}
 }
