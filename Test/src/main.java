@@ -6,6 +6,8 @@ public class main {
 		deckHand d =new deckHand();
 		d.Init(new String[8]);
 		System.out.println("hey2");
+		System.out.println();
+		System.out.println();
 	}
 
 }
