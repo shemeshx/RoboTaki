@@ -16,7 +16,7 @@ import Cards.specialCardNoColor;
 public class RobotTaki {
 	private deckHand myDeck;
 	
-	public RobotTaki(String []cards)
+	public RobotTaki(String []cards) //start new game
 	{
 		this.myDeck=new deckHand();
 		myDeck.Init(cards);
@@ -25,8 +25,8 @@ public class RobotTaki {
 	//this method gets a card on the heap that the player put. the method turns a card.
 	{
 		
-		Card myCard = null;
-		LinkedList<Card>avaiableCards=getAvailableCards(card);
+		Card myCard = null; //card to pop from the dackhand
+		LinkedList<Card>avaiableCards=getAvailableCards(card); //get all the cards wich can put on this card
 		return myCard;
 	}
 	public LinkedList<Card> getAvailableCards(Card card) //return linked list with all the cards tan can place on the corrent ard
