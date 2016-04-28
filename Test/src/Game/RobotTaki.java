@@ -31,19 +31,21 @@ public class RobotTaki {
 	}
 	public LinkedList<Card> getAvailableCards(Card card) //return linked list with all the cards tan can place on the corrent ard
 	{
-		LinkedList<Card> availableCards=new LinkedList<Card>();
-		LinkedList<Card> temp = copyList(myDeck.getHand());
-		while (!temp.isEmpty()){
+		LinkedList<Card> availableCards=new LinkedList<Card>(); //new list to storw all the available cards
+		LinkedList<Card> temp = copyList(myDeck.getHand()); //copy the cards in the deck hand to new temp list
+		while (!temp.isEmpty()){ //check for each card in the deck what it's type
 		Card current = temp.getFirst();
 		temp.removeFirst();
-			if(current instanceof numberCard)
+			if(current instanceof numberCard) //if the corrrent cad is number card
 			{
-				if(card.getType().equals(current.getType())){
+				if(card.getType().equals(current.getType())) 
+				{ //if also the checked card is number card
 					numberCard nCard=(numberCard) current;
 					if(nCard.getColor().equals(((numberCard)card).getColor()))
 					{
 						availableCards.add(nCard);
-					}else 
+					}
+					else 
 						if (nCard.getNumber()==((numberCard)card).getNumber())
 							availableCards.add(nCard);
 						else if (card instanceof specialCardColor && ((specialCardColor)card).getColor().equals(nCard.getColor()))
@@ -52,7 +54,7 @@ public class RobotTaki {
 				else continue;
 			}
 			
-			if(current instanceof specialCardColor)
+			if(current instanceof specialCardColor) //if the corrent card is special card
 			{
 				if(card.getType().equals(current.getType())){
 					specialCardColor sCard=(specialCardColor) current;
@@ -69,7 +71,7 @@ public class RobotTaki {
 				availableCards.add(((specialCardNoColor)current));
 			
 		}
-		
+		System.out.println(printList(myDeck.getHand()));
 		System.out.println(printList(availableCards));
 		
 		return availableCards;
@@ -83,7 +85,7 @@ public class RobotTaki {
 		return newList;
 		
 	}
-	public String printList(LinkedList<Card> list) 
+	public String printList(LinkedList<Card> list) //method witch get a list and print it
 	{
 		String str="hand:\n";
 		LinkedList<Card> str2=copyList(list);
