@@ -1,0 +1,8 @@
+methods of robotaki - 
+1)play turn-
+	1.1)checking available  cards by-
+		a)checking if we get card number.
+		b)checking if we get color card.
+		c)checking if we get super taki.
+		d)checking if we get switch/stop/plus.
+	1.2)which card is the best to return.

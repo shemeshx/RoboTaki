@@ -5,6 +5,7 @@ import java.awt.List;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 import Cards.Card;
 import Cards.Colors;
@@ -24,11 +25,21 @@ public class RobotTaki {
 		this.myDeck=new deckHand();
 		myDeck.Init(cards);
 	}
-	public Card playTurn(Card card)
-	//this method gets a card on the heap that the player put. the method turns a card.
+	
+	public Card playTurn(Card card)//this method gets a card on the heap that the player put. the method turns a card.
 	{
+		/*
+		 * this method get the corrent card witch put on the table
+		 * the method find the type of the card and find the all the card in the dack witch can put on this card
+		 * from this list the method find the best card to return
+		 * 
+		 * if return null seems that cant return any card like in case of the card on the table is stop or 2+
+		 * 
+		 * if the list returns eampty so there is no available card and need to take card from the bank
+		 *
+		 */
 		Card myCard = null; //card to pop from the dackhand
-		LinkedList<Card>avaiableCards;
+		LinkedList<Card>avaiableCards=null;
 		
 		if(card instanceof specialCardColor) //if the card is special card
 		{
@@ -36,33 +47,70 @@ public class RobotTaki {
 			if(sCard.getType().equals(cardType.STOP))
 			{
 				//TODU Skip the turn
+				avaiableCards=null;
 			}
 		}
 		else if(card instanceof specialCardNoColor)
 		{
-			specialCardNoColor sCard=(specialCardNoColor)card;
-			if (sCard.getType().equals(cardType.COLOR))
-			{
-				//after this card is put by the user, the RoboTaki ask to choose color with button
-				//TODO get color by click on button
-				avaiableCards=this.getAvailableCardsByColor(Colors.BLUE);///blye for check the color is const 
-			}
+			
+			avaiableCards=this.getAvailableByColorCard(card);
 		}
 		else if(card instanceof numberCard) //if the card is number card
 		{
-			numberCard nCard=(numberCard)card;
-			if(nCard.getNumber()==2) //if the number is 2 PLUS
-			{
-				//TODO Get 2 cards from the board
-			}
-			else //regular number card
-			{
-				avaiableCards=getAvailableCards(card); //get all the cards wich can put on this card
-			}
+			avaiableCards =this.getAllAvailableCardsByNumberCard(card);
 		}
 		
-		
+		if(avaiableCards==null) myCard=null; //if can;t return card (skip the turn)
+		else //find the best card to return
+		{
+			myCard=this.findCardToReturn(avaiableCards);
+		}
 		return myCard;
+	}
+	
+	private Card findCardToReturn(LinkedList<Card> availableCardsList)
+	{
+		Card temp=null;
+		
+		return temp;
+	}
+	
+	private Colors getColorsInput() //return color value from buttons input.
+	{
+		/*
+		 * 
+		 * change scanner line to raspbery input method of buttons!!!!!!!!!!!
+		 * 
+		 * */
+		Colors color=Colors.valueOf((new Scanner(System.in).nextLine()).toUpperCase());
+		
+		return color;
+		
+	}
+	
+	private LinkedList<Card >getAvailableByColorCard(Card card) //return list of card witch can put on speicialNoColor card
+	{
+		specialCardNoColor sCard=(specialCardNoColor)card;
+		if (sCard.getType().equals(cardType.COLOR))
+		{
+			//after this card is put by the user, the RoboTaki ask to choose color with button
+			//TODO get color by click on button
+			return this.getAvailableCardsByColor(this.getColorsInput());///get the color from input by buttons 
+		}
+		return null;
+	}
+	private LinkedList<Card >getAllAvailableCardsByNumberCard(Card card) //return list of card witch can put on numberCArd card
+	{
+		numberCard nCard=(numberCard)card;
+		if(nCard.getNumber()==2) //if the number is 2 PLUS
+		{
+			//TODO Get 2 cards from the board
+			return null;
+		}
+		else //regular number card
+		{
+			return getAvailableCards(card); //get all the cards wich can put on this card
+		}
 	}
 	
 	public LinkedList<Card> getAvailableCardsByColor(Colors color) //Get all the cards from this color and SuperTaki and Change Color
