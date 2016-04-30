@@ -70,7 +70,7 @@ public class RobotTaki {
 	
 	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList)
 	{
-		LinkedList<Card> temp=null;
+		LinkedList<Card> temp=new LinkedList<Card>();
 		
 		return temp;
 	}
