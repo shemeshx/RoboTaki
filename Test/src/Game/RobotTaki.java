@@ -173,7 +173,6 @@ public class RobotTaki {
 				if(((card instanceof specialCardColor)&&(sCard.getColor().equals(((specialCardColor)card).getColor())||sCard.getType()==((specialCardColor)card).getType()))
 						||((card instanceof numberCard)&&(((numberCard)card).getColor().equals(sCard.getColor()))))
 				{
-					
 					availableCards.add(sCard);
 				}
 				else continue;
