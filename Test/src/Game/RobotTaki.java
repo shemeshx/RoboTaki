@@ -43,21 +43,16 @@ public class RobotTaki {
 		
 		if(card instanceof specialCardColor) //if the card is special card
 		{
-			specialCardColor sCard=(specialCardColor)card;
-			if(sCard.getType().equals(cardType.STOP))
-			{
-				//TODU Skip the turn
-				avaiableCards=null;
-			}
+			avaiableCards=this.getAvailableBySpecialColorCard((specialCardColor)card);
 		}
 		else if(card instanceof specialCardNoColor)
 		{
 			
-			avaiableCards=this.getAvailableByColorCard(card);
+			avaiableCards=this.getAvailableByNoColorCard((specialCardNoColor)card);
 		}
 		else if(card instanceof numberCard) //if the card is number card
 		{
-			avaiableCards =this.getAllAvailableCardsByNumberCard(card);
+			avaiableCards =this.getAllAvailableCardsByNumberCard((numberCard)card);
 		}
 		
 		if(avaiableCards==null) myCard=null; //if can;t return card (skip the turn)
@@ -88,10 +83,22 @@ public class RobotTaki {
 		
 	}
 	
-	private LinkedList<Card >getAvailableByColorCard(Card card) //return list of card witch can put on speicialNoColor card
+	private LinkedList<Card >getAvailableBySpecialColorCard(specialCardColor sCard) //return list of card witch can put on speicialNoColor card
 	{
-		specialCardNoColor sCard=(specialCardNoColor)card;
-		if (sCard.getType().equals(cardType.COLOR))
+		if(sCard.getType().equals(cardType.STOP))
+		{
+			//TODU Skip the turn
+			return null;
+		}
+		else 
+		{
+			return getAvailableCards(sCard);
+		}
+	}
+	
+	private LinkedList<Card >getAvailableByNoColorCard(specialCardNoColor sCard) //return list of card witch can put on speicialNoColor card
+	{
+		if (sCard.getType().equals(cardType.COLOR)||sCard.getType().equals(cardType.SUPER))
 		{
 			//after this card is put by the user, the RoboTaki ask to choose color with button
 			//TODO get color by click on button
@@ -99,9 +106,8 @@ public class RobotTaki {
 		}
 		return null;
 	}
-	private LinkedList<Card >getAllAvailableCardsByNumberCard(Card card) //return list of card witch can put on numberCArd card
+	private LinkedList<Card >getAllAvailableCardsByNumberCard(numberCard nCard) //return list of card witch can put on numberCArd card
 	{
-		numberCard nCard=(numberCard)card;
 		if(nCard.getNumber()==2) //if the number is 2 PLUS
 		{
 			//TODO Get 2 cards from the board
@@ -109,7 +115,7 @@ public class RobotTaki {
 		}
 		else //regular number card
 		{
-			return getAvailableCards(card); //get all the cards wich can put on this card
+			return getAvailableCards(nCard); //get all the cards wich can put on this card
 		}
 	}
 	
@@ -143,45 +149,37 @@ public class RobotTaki {
 		return availableCards;
 	}
 	
-	public LinkedList<Card> getAvailableCards(Card card) //return linked list with all the cards tan can place on the corrent ard
+	private LinkedList<Card> getAvailableCards(Card card) //return linked list with all the cards tan can place on the corrent ard
 	{
 		LinkedList<Card> availableCards=new LinkedList<Card>(); //new list to storw all the available cards
 		LinkedList<Card> temp = copyList(myDeck.getHand()); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty()){ //check for each card in the deck what it's type
 		Card current = temp.getFirst();
 		temp.removeFirst();
-			if(current instanceof numberCard) //if the corrrent cad is number card
+			if(current instanceof numberCard) //if the current cad is number card
 			{
-				if(card.getType().equals(current.getType())) 
-				{ //if also the checked card is number card
-					numberCard nCard=(numberCard) current;
-					if(nCard.getColor().equals(((numberCard)card).getColor()))
-					{
-						availableCards.add(nCard);
-					}
-					else 
-						if (nCard.getNumber()==((numberCard)card).getNumber())
-							availableCards.add(nCard);
-						else if (card instanceof specialCardColor && ((specialCardColor)card).getColor().equals(nCard.getColor()))
-								availableCards.add(nCard);
+				numberCard nCard=(numberCard) current;
+				if(((card instanceof numberCard)&&(nCard.getColor().equals(((numberCard)card).getColor())||nCard.getNumber()==((numberCard)card).getNumber()))
+						||((card instanceof specialCardColor)&&(((specialCardColor)card).getColor().equals(nCard.getColor()))))
+				{
+					availableCards.add(nCard);
 				}
 				else continue;
 			}
 			
-			if(current instanceof specialCardColor) //if the corrent card is special card
+			else if(current instanceof specialCardColor) //if the correct card is special card
 			{
-				if(card.getType().equals(current.getType())){
-					specialCardColor sCard=(specialCardColor) current;
-					availableCards.add(sCard);
-				}else if (card instanceof numberCard && ((numberCard)card).getColor().equals(((specialCardColor)current).getColor()))
+				specialCardColor sCard=(specialCardColor) current;
+				if(((card instanceof specialCardColor)&&(sCard.getColor().equals(((specialCardColor)card).getColor())||sCard.getType()==((specialCardColor)card).getType()))
+						||((card instanceof numberCard)&&(((numberCard)card).getColor().equals(sCard.getColor()))))
 				{
-					specialCardColor sCard=(specialCardColor) current;
+					
 					availableCards.add(sCard);
 				}
-					else continue;
+				else continue;
 			}
 			
-			if(current instanceof specialCardNoColor)
+			else if(current instanceof specialCardNoColor)
 				availableCards.add(((specialCardNoColor)current));
 			
 		}
@@ -190,6 +188,8 @@ public class RobotTaki {
 		
 		return availableCards;
 	}
+	
+	
 	public LinkedList<Card> copyList(LinkedList<Card> list){
 		LinkedList<Card> newList=new LinkedList<Card>();
 		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
