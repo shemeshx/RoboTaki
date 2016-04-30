@@ -26,11 +26,11 @@ public class RobotTaki {
 		myDeck.Init(cards);
 	}
 	
-	public Card playTurn(Card card)//this method gets a card on the heap that the player put. the method turns a card.
+	public LinkedList<Card> playTurn(Card card)//this method gets a card on the heap that the player put. the method turns a card.
 	{
 		/*
-		 * this method get the corrent card witch put on the table
-		 * the method find the type of the card and find the all the card in the dack witch can put on this card
+		 * this method get the current card witch put on the table
+		 * the method find the type of the card and find  all the cards in the dack witch can put on this card
 		 * from this list the method find the best card to return
 		 * 
 		 * if return null seems that cant return any card like in case of the card on the table is stop or 2+
@@ -38,7 +38,7 @@ public class RobotTaki {
 		 * if the list returns eampty so there is no available card and need to take card from the bank
 		 *
 		 */
-		Card myCard = null; //card to pop from the dackhand
+		LinkedList<Card> myCard = null; //card to pop from the dackhand
 		LinkedList<Card>avaiableCards=null;
 		
 		if(card instanceof specialCardColor) //if the card is special card
@@ -68,9 +68,9 @@ public class RobotTaki {
 		return myCard;
 	}
 	
-	private Card findCardToReturn(LinkedList<Card> availableCardsList)
+	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList)
 	{
-		Card temp=null;
+		LinkedList<Card> temp=null;
 		
 		return temp;
 	}
