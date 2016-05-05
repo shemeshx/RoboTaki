@@ -61,14 +61,14 @@ public class RobotTaki {
 		if(avaiableCards==null){ myCard=null; //if can;t return card (skip the turn)
 			System.out.println("NO CARDS AVAILABLE");
 		}
-		/*else //find the best card to return
+		else //find the best card to return
 		{
-			myCard=this.findCardToReturn(avaiableCards);
-		}*/
+			myCard=this.findCardToReturn(avaiableCards,card);
+		}
 		return null;//myCard;
 	}
 	
-	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList)
+	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList, Card card)
 	{
 		LinkedList<Card> temp=new LinkedList<Card>();
 		temp = this.copyList(availableCardsList);
