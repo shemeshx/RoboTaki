@@ -40,7 +40,7 @@ public class RobotTaki {
 		 */
 		LinkedList<Card> myCard = null; //card to pop from the dackhand
 		LinkedList<Card>avaiableCards=null;
-		System.out.println(this.printList(myDeck.getHand()));
+		System.out.println(myDeck);
 		if(card instanceof specialCardColor) //if the card is special card
 		{
 			avaiableCards=this.getAvailableBySpecialColorCard((specialCardColor)card);
