@@ -40,33 +40,38 @@ public class RobotTaki {
 		 */
 		LinkedList<Card> myCard = null; //card to pop from the dackhand
 		LinkedList<Card>avaiableCards=null;
-		
+		System.out.println(this.printList(myDeck.getHand()));
 		if(card instanceof specialCardColor) //if the card is special card
 		{
 			avaiableCards=this.getAvailableBySpecialColorCard((specialCardColor)card);
+			System.out.println(printList(avaiableCards));
 		}
 		else if(card instanceof specialCardNoColor)
 		{
 			
 			avaiableCards=this.getAvailableByNoColorCard((specialCardNoColor)card);
+			System.out.println(printList(avaiableCards));
 		}
 		else if(card instanceof numberCard) //if the card is number card
 		{
 			avaiableCards =this.getAllAvailableCardsByNumberCard((numberCard)card);
+			System.out.println(printList(avaiableCards));
 		}
 		
-		if(avaiableCards==null) myCard=null; //if can;t return card (skip the turn)
-		else //find the best card to return
+		if(avaiableCards==null){ myCard=null; //if can;t return card (skip the turn)
+			System.out.println("NO CARDS AVAILABLE");
+		}
+		/*else //find the best card to return
 		{
 			myCard=this.findCardToReturn(avaiableCards);
-		}
-		return myCard;
+		}*/
+		return null;//myCard;
 	}
 	
 	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList)
 	{
 		LinkedList<Card> temp=new LinkedList<Card>();
-		
+		temp = this.copyList(availableCardsList);
 		return temp;
 	}
 	
@@ -144,8 +149,7 @@ public class RobotTaki {
 				availableCards.add(current); //if it is add it to the list
 			}
 		}
-		System.out.println(printList(myDeck.getHand()));
-		System.out.println(printList(availableCards));
+		
 		return availableCards;
 	}
 	
@@ -182,8 +186,7 @@ public class RobotTaki {
 				availableCards.add(((specialCardNoColor)current));
 			
 		}
-		System.out.println(printList(myDeck.getHand()));
-		System.out.println(printList(availableCards));
+	
 		
 		return availableCards;
 	}
@@ -200,7 +203,7 @@ public class RobotTaki {
 	}
 	public String printList(LinkedList<Card> list) //method witch get a list and print it
 	{
-		String str="hand:\n";
+		String str="list:\n";
 		LinkedList<Card> str2=copyList(list);
 		while(!str2.isEmpty())
 		{
