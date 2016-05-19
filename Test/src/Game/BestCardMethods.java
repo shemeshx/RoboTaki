@@ -1,7 +1,13 @@
 package Game;
 
-public class BestCardMethods {
+import java.util.LinkedList;import Cards.Card;
+import Cards.Colors;
 
+public class BestCardMethods 
+{
 	
-
+	//public static LinkedList<Card> ReturnCardOnTaki(Colors color)
+	//{
+		
+	//}
 }

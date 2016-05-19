@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+import javax.print.attribute.standard.NumberUp;
+
 import Cards.Card;
 import Cards.Colors;
 import Cards.cardType;
@@ -65,13 +67,15 @@ public class RobotTaki {
 		{
 			myCard=this.findCardToReturn(avaiableCards,card);
 		}
+		System.out.println(myCard.isEmpty());
 		return null;//myCard;
 	}
 	
 	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList, Card card)
 	{
 		LinkedList<Card> temp=new LinkedList<Card>();
-		temp = this.copyList(availableCardsList);
+		System.out.println(FindFirstTaki(availableCardsList)!=null);
+		if(FindFirstTaki(availableCardsList)!=null) ReturnCardsByColorTaki(this.ReturnCardsByColorTaki(availableCardsList));
 		return temp;
 	}
 	
@@ -216,5 +220,49 @@ public class RobotTaki {
 	{
 		return this.myDeck.toString();
 	}
+	
+	public LinkedList<Card> ReturnCardsByColorTaki(LinkedList<Card> AvailableCards)
+	{
+		LinkedList<Card> cardList=null;
+		cardList.addFirst(this.FindFirstTaki(AvailableCards));
+		LinkedList<Card> temp = copyList(myDeck.getHand()); //copy the cards in the deck hand to new temp list
+		while (!temp.isEmpty())
+		{ //check for each card in the deck what it's type
+			Card current = temp.getFirst();
+			temp.removeFirst();
+			
+			if(current instanceof numberCard) cardList.addLast(current);
+			else continue;
+			
+		}
+		temp = copyList(myDeck.getHand()); //copy the cards in the deck hand to new temp list
+		while (!temp.isEmpty())
+		{ //check for each card in the deck what it's type
+			Card current = temp.getFirst();
+			temp.removeFirst();
+			
+			if(current instanceof specialCardColor) cardList.addLast(current);
+			else continue;
+			
+		}
+		return cardList;
+	}
+	
+	
+	public specialCardColor FindFirstTaki(LinkedList<Card> availableCards)
+	{
+		LinkedList<Card> temp = copyList(availableCards); //copy the cards in the deck hand to new temp list
+		while (!temp.isEmpty())
+		{ //check for each card in the deck what it's type
+			Card current = temp.getFirst();
+			temp.removeFirst();
+			
+			if(current instanceof specialCardColor&&((specialCardColor)current).getType().equals(cardType.TAKI)) return (specialCardColor) current;
+			else continue;
+			
+		}
+		return null;
+	}
+	
 	
 }
