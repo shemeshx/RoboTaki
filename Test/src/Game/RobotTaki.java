@@ -26,6 +26,15 @@ public class RobotTaki {
 		myDeck.Init(cards);
 	}
 	
+	private void Game()
+	{
+		while(!this.myDeck.getHand().isEmpty())
+		{
+			
+		}
+	}
+	
+	
 	public LinkedList<Card> playTurn(Card card)//this method gets a card on the heap that the player put. the method turns a card.
 	{
 		/*
@@ -170,7 +179,7 @@ public class RobotTaki {
 			else if(current instanceof specialCardColor) //if the correct card is special card
 			{
 				specialCardColor sCard=(specialCardColor) current;
-				if(((card instanceof specialCardColor)&&(sCard.getColor().equals(((specialCardColor)card).getColor())||sCard.getType()==((specialCardColor)card).getType()))
+				if(((card instanceof specialCardColor)&&((sCard.getColor().equals(((specialCardColor)card).getColor()))||(sCard.getType()==((specialCardColor)card).getType())))
 						||((card instanceof numberCard)&&(((numberCard)card).getColor().equals(sCard.getColor()))))
 				{
 					availableCards.add(sCard);
