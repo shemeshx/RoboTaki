@@ -124,6 +124,8 @@ public class RobotTaki {
 		if(nCard.getNumber()==2) //if the number is 2 PLUS
 		{
 			//TODO Get 2 cards from the board
+		    LinkedList<Card> temp=new LinkedList<Card>();
+		    temp.addLast(this.Search2Plus(this.myDeck.getHand()));
 			return null;
 		}
 		else //regular number card
@@ -349,6 +351,21 @@ public class RobotTaki {
 			else if (current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(color)) counter++;
 		}
 		return counter;
+	}
+	
+	private numberCard Search2Plus(LinkedList<Card> availableCard)
+	{
+		LinkedList<Card> temp = copyList(availableCard); //copy the cards in the deck hand to new temp list
+		int counter=0;
+		while (!temp.isEmpty())
+		{ //check for each card in the deck what it's type
+			Card current = temp.getFirst();
+			temp.removeFirst();
+			
+			if(current instanceof numberCard&&((numberCard)current).getNumber()==2)) return current;
+			else continue;
+		}
+		return null;
 	}
 	
 	
