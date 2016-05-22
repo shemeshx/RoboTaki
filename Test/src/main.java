@@ -12,11 +12,12 @@ public class main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String []str={"8 BLUE","SWITCH RED","2 GREEN","COLOR","SUPER","PLUS BLUE","PLUS RED","9 BLUE"};
+		String []str={"8 BLUE","SWITCH RED","2 GREEN","COLOR","SUPER","TAKI BLUE","PLUS RED","5 BLUE"};
 		RobotTaki r=new RobotTaki(str);
-		//r.playTurn(new specialCardNoColor(cardType.COLOR));
 		
-		r.playTurn(new specialCardColor(cardType.PLUS,Colors.BLUE));
+		//r.playTurn(new specialCardNoColor(cardType.COLOR));
+		r.playTurn(new numberCard(4,Colors.GREEN));
+		//r.playTurn(new specialCardColor(cardType.PLUS,Colors.RED));
 		
 	}
 

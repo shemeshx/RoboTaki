@@ -2,6 +2,7 @@ package Cards;
 
 public class specialCardNoColor extends Card {
 
+	private Colors CurrentColor;
 	public specialCardNoColor(cardType type) {
 		this.type=type;
 	}
@@ -21,6 +22,16 @@ public class specialCardNoColor extends Card {
 	@Override
 	public String toString() {
 		return "specialCardNoColor [type=" + type + "]";
+	}
+	
+	public void SetCurrentColor(Colors c)
+	{
+		this.CurrentColor=c;
+	}
+	
+	public Colors GetCurrentColor()
+	{
+		return this.CurrentColor;
 	}
 	
 }

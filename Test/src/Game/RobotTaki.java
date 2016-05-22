@@ -2,6 +2,7 @@ package Game;
 
 import java.awt.Color;
 import java.awt.List;
+import java.awt.Window.Type;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
@@ -75,7 +76,6 @@ public class RobotTaki {
 		}
 		else //find the best card to return
 		{
-
 			myCard=this.findCardToReturn(avaiableCards,card);
 			System.out.println(printList(myCard));
 		}
@@ -230,16 +230,18 @@ public class RobotTaki {
 	
 	private LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList, Card card)
 	{
-		LinkedList<Card> temp=new LinkedList<Card>();
-		if(FindFirstTaki(availableCardsList)!=null)temp= this.ReturnCardsByColorTaki(availableCardsList);
-		else if(FindFirstPlus(availableCardsList)!=null)temp= this.ReturnCardsByPlus(availableCardsList);
-		return temp;
+		if(availableCardsList.size()==0) return new LinkedList<Card>();
+		else if(this.HaveSpecialOneColorCardWithCards(availableCardsList,cardType.TAKI)!=null)return this.ReturnCardsByColorTaki(availableCardsList);
+		else if(this.HaveSpecialOneColorCardWithCards(availableCardsList,cardType.PLUS)!=null) return this.ReturnCardsByPlus(availableCardsList);
+		else if (this.ReturnFirst(new numberCard(3, Colors.RED),availableCardsList) != null) return this.ReturnFirst(new numberCard(3, Colors.RED),availableCardsList) ;
+       return this.ReturnFirst(new specialCardColor(cardType.PLUS, Colors.BLUE),availableCardsList);
+
 	}
 	
 	private LinkedList<Card> ReturnCardsByColorTaki(LinkedList<Card> AvailableCards)
 	{
 		LinkedList<Card> cardList=new LinkedList<Card>();
-		specialCardColor Taki=this.FindFirstTaki(AvailableCards);
+		specialCardColor Taki=this. HaveSpecialOneColorCardWithCards(AvailableCards,cardType.TAKI);
 		cardList.addFirst(Taki);
 		LinkedList<Card> temp = copyList(AvailableCards); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty())
@@ -263,37 +265,69 @@ public class RobotTaki {
 			else continue;
 			
 		}
-		System.out.println("BOOM "+cardList);
 		return cardList;
 	}
 	
+	private LinkedList<Card>  ReturnFirst  (Card type,LinkedList<Card> availableCards)
+    {
+		LinkedList<Card> CardsToReturn = new LinkedList<Card>();
+        for (Card card : availableCards) 
+        {
+        	if (card instanceof specialCardNoColor)
+            {
+        		 specialCardNoColor NoCard = (specialCardNoColor)card;
+                 NoCard.SetCurrentColor(this.GetMaxColor());
+                 CardsToReturn.addLast(card);
+                 if (NoCard.getType().equals(cardType.COLOR)) return CardsToReturn;
+                 else
+                 {
+                	 for (Card card2 : this.myDeck.getHand())
+                     {
+                      if(card2 instanceof numberCard&&((numberCard)card2).getColor().equals(NoCard.GetCurrentColor())) CardsToReturn.addLast(card2);
+                      else continue;
+                     }
+                	 for (Card card2 : this.myDeck.getHand())
+                     {
+                      if(card2 instanceof specialCardColor&&((specialCardColor)card2).getColor().equals(NoCard.GetCurrentColor())) CardsToReturn.addLast(card2);
+                      else continue;
+                     }
+                	 return CardsToReturn;
+                 }
+            }
+        	
+        	else if(type.getClass().isInstance(card))
+        	{
+        		CardsToReturn.addLast(card);
+        		return CardsToReturn;
+        	}
+        }
+        return null;
+    }
 	
-	private specialCardColor FindFirstTaki(LinkedList<Card> availableCards)
-	{
-		LinkedList<Card> temp = copyList(availableCards); //copy the cards in the deck hand to new temp list
-		while (!temp.isEmpty())
-		{ //check for each card in the deck what it's type
-			Card current = temp.getFirst();
-			temp.removeFirst();
-			
-			if(current instanceof specialCardColor&&((specialCardColor)current).getType().equals(cardType.TAKI)) return (specialCardColor) current;
-			else continue;
-			
-		}
-		return null;
-	}
+	 private Colors GetMaxColor()
+	    {
+	        int Red = 0, Green = 0, Yellow = 0, Blue = 0;
+	        for (Card current :this.myDeck.getHand()) 
+	        {
+	            if (current instanceof numberCard||current instanceof specialCardColor)
+	            {
+	                if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.BLUE))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.BLUE)))) Blue++;
+	                else if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.GREEN))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.GREEN)))) Green++;
+	                else if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.RED))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.RED)))) Red++;
+	                else if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.YELLOW))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.YELLOW)))) Yellow++;
+	            }
+	        }
+	        if (Blue >= Red && Blue >= Yellow && Blue >= Green) return Colors.BLUE;
+	        else if (Yellow >= Red && Yellow >= Blue && Yellow >= Green) return Colors.YELLOW;
+	        else if (Green >= Red && Green >= Blue && Green >= Yellow) return Colors.GREEN;
+	        else return Colors.RED;
+	    }
 	
-	private specialCardColor FindFirstPlus(LinkedList<Card> AvailableCards)
+	private specialCardColor HaveSpecialOneColorCardWithCards(LinkedList<Card> availableCards,cardType type)
 	{
-		LinkedList<Card> temp = copyList(AvailableCards); //copy the cards in the deck hand to new temp list
-		while (!temp.isEmpty())
-		{ //check for each card in the deck what it's type
-			Card current = temp.getFirst();
-			temp.removeFirst();
-			
-			if(current instanceof specialCardColor&&((specialCardColor)current).getType().equals(cardType.PLUS)&&this.NumberOfCardsOfColor(AvailableCards,((specialCardColor)current).getColor())>1) return (specialCardColor) current;
-			else continue;
-			
+		for (Card card : availableCards) 
+		{
+			if(card instanceof specialCardColor&&((specialCardColor)card).getType().equals(type)&&this.NumberOfCardsOfColor(this.myDeck.getHand(), ((specialCardColor)card).getColor())>1) return (specialCardColor)card;
 		}
 		return null;
 	}
@@ -301,7 +335,7 @@ public class RobotTaki {
 	private LinkedList<Card> ReturnCardsByPlus(LinkedList<Card> AvailableCards)
 	{
 		LinkedList<Card> cardList=new LinkedList<Card>();
-		specialCardColor Plus=this.FindFirstPlus(AvailableCards);
+		specialCardColor Plus=this. HaveSpecialOneColorCardWithCards(AvailableCards,cardType.PLUS);
 		cardList.addFirst(Plus);
 		//System.out.println(Plus);
 		LinkedList<Card> temp = copyList(AvailableCards); //copy the cards in the deck hand to new temp list
@@ -334,23 +368,17 @@ public class RobotTaki {
 			else continue;
 			
 		}
-		System.out.println("BOOM "+cardList);
 		return cardList;
 	}
 	
 	private int NumberOfCardsOfColor(LinkedList<Card> cardList,Colors color)
 	{
-		LinkedList<Card> temp = copyList(cardList); //copy the cards in the deck hand to new temp list
-		int counter=0;
-		while (!temp.isEmpty())
-		{ //check for each card in the deck what it's type
-			Card current = temp.getFirst();
-			temp.removeFirst();
-			
-			if(current instanceof numberCard&&((numberCard)current).getColor().equals(color)) counter++;
-			else if (current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(color)) counter++;
+		int count=0;
+		for (Card current : cardList) 
+		{
+			if ((current instanceof numberCard&&((numberCard)current).getColor().equals(color))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(color)))) count++;
 		}
-		return counter;
+		return count;
 	}
 	
 	private numberCard Search2Plus(LinkedList<Card> availableCard)
@@ -358,17 +386,14 @@ public class RobotTaki {
 		LinkedList<Card> temp = copyList(availableCard); //copy the cards in the deck hand to new temp list
 		int counter=0;
 		while (!temp.isEmpty())
-		{ //check for each card in the deck what it's type
+		{ 	//check for each card in the deck what it's type
 			Card current = temp.getFirst();
 			temp.removeFirst();
 			
-			if(current instanceof numberCard&&((numberCard)current).getNumber()==2)) return current;
+				if(current instanceof numberCard&&((numberCard)current).getNumber()==2)) return (numberCard)current;
 			else continue;
 		}
 		return null;
 	}
-	
-	
-	
 	
 }
