@@ -309,7 +309,7 @@ public class RobotTaki {
 	        int Red = 0, Green = 0, Yellow = 0, Blue = 0;
 	        for (Card current :this.myDeck.getHand()) 
 	        {
-	            if (current instanceof numberCard||current instanceof specialCardColor)
+	            if (current instanceof numberCard||current instanceof specialCardColor) //check the current card coloe
 	            {
 	                if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.BLUE))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.BLUE)))) Blue++;
 	                else if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.GREEN))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.GREEN)))) Green++;
@@ -317,7 +317,8 @@ public class RobotTaki {
 	                else if ((current instanceof numberCard&&((numberCard)current).getColor().equals(Colors.YELLOW))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(Colors.YELLOW)))) Yellow++;
 	            }
 	        }
-	        if (Blue >= Red && Blue >= Yellow && Blue >= Green) return Colors.BLUE;
+	        //return the color with the max number of cards
+	        if (Blue >= Red && Blue >= Yellow && Blue >= Green) return Colors.BLUE; 
 	        else if (Yellow >= Red && Yellow >= Blue && Yellow >= Green) return Colors.YELLOW;
 	        else if (Green >= Red && Green >= Blue && Green >= Yellow) return Colors.GREEN;
 	        else return Colors.RED;
