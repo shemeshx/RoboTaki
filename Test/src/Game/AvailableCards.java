@@ -12,17 +12,18 @@ import Cards.specialCardColor;
 import Cards.specialCardNoColor;
 
 public class AvailableCards {
-	public static LinkedList<Card >getAvailableBySpecialColorCard(specialCardColor sCard) //return list of card witch can put on speicialNoColor card
+	
+	public static LinkedList<Card >getAvailableBySpecialColorCard(specialCardColor sCard,LinkedList<Card> myDeck) //return list of card witch can put on speicialNoColor card
 	{
-		if(sCard.getType().equals(cardType.STOP))
-		{
+		//if(sCard.getType().equals(cardType.STOP))
+		//{
 			//TODU Skip the turn
-			return null;
-		}
-		else 
-		{
-			return getAvailableCards(sCard);
-		}
+			//return null;
+		//}
+		//else 
+		//{
+			return getAvailableCards(sCard,myDeck);
+		//}
 	}
 	
 	public static LinkedList<Card >getAvailableByNoColorCard(specialCardNoColor sCard) //return list of card witch can put on speicialNoColor card
@@ -129,6 +130,16 @@ public class AvailableCards {
 		return color;
 		
 	}
+	public static LinkedList<Card> copyList(LinkedList<Card> list){
+		LinkedList<Card> newList=new LinkedList<Card>();
+		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
+			Card card=iter.next();
+			newList.addLast(card);
+			}
+		return newList;
+		
+	}
+	
 	public static numberCard Search2Plus(LinkedList<Card> availableCard)
 	{
 		LinkedList<Card> temp = copyList(availableCard); //copy the cards in the deck hand to new temp list
@@ -144,13 +155,5 @@ public class AvailableCards {
 		return null;
 	}
 	
-	public static LinkedList<Card> copyList(LinkedList<Card> list){
-		LinkedList<Card> newList=new LinkedList<Card>();
-		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
-			Card card=iter.next();
-			newList.addLast(card);
-			}
-		return newList;
-		
-	}
+	
 }

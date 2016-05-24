@@ -57,7 +57,7 @@ public class RobotTaki {
 		//System.out.println(card);
 		if(card instanceof specialCardColor) //if the card is special card
 		{
-			avaiableCards=AvailableCards.getAvailableBySpecialColorCard((specialCardColor)card);
+			avaiableCards=AvailableCards.getAvailableBySpecialColorCard((specialCardColor)card,this.myDeck.getHand());
 			System.out.println(printList(avaiableCards));
 		}
 		else if(card instanceof specialCardNoColor)
@@ -125,15 +125,6 @@ public class RobotTaki {
 	}
 	
 	
-	private int NumberOfCardsOfColor(LinkedList<Card> cardList,Colors color)
-	{
-		int count=0;
-		for (Card current : cardList) 
-		{
-			if ((current instanceof numberCard&&((numberCard)current).getColor().equals(color))||((current instanceof specialCardColor&&((specialCardColor)current).getColor().equals(color)))) count++;
-		}
-		return count;
-	}
 	
 	
 	

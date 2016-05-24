@@ -1,6 +1,7 @@
 package Game;
 
 import java.util.LinkedList;
+import java.util.ListIterator;
 
 import Cards.Card;
 import Cards.Colors;
@@ -14,19 +15,19 @@ public class BestCard {
 	public static LinkedList<Card> findCardToReturn(LinkedList<Card> availableCardsList, Card card,LinkedList<Card> myDeck)
 	{
 		if(availableCardsList.size()==0) return new LinkedList<Card>();
-		else if(HaveSpecialOneColorCardWithCards(availableCardsList,cardType.TAKI,myDeck)!=null)return ReturnCardsByColorTaki(availableCardsList);
-		else if(HaveSpecialOneColorCardWithCards(availableCardsList,cardType.PLUS,myDeck)!=null) return ReturnCardsByPlus(availableCardsList);
+		else if(HaveSpecialOneColorCardWithCards(availableCardsList,cardType.TAKI,myDeck)!=null)return ReturnCardsByColorTaki(availableCardsList,myDeck);
+		else if(HaveSpecialOneColorCardWithCards(availableCardsList,cardType.PLUS,myDeck)!=null) return ReturnCardsByPlus(availableCardsList,myDeck);
 		else if (ReturnFirst(new numberCard(3, Colors.RED),availableCardsList,myDeck) != null) return ReturnFirst(new numberCard(3, Colors.RED),availableCardsList,myDeck) ;
        return ReturnFirst(new specialCardColor(cardType.PLUS, Colors.BLUE),availableCardsList,myDeck);
 
 	}
 	
-	public static LinkedList<Card> ReturnCardsByColorTaki(LinkedList<Card> AvailableCards)
+	public static LinkedList<Card> ReturnCardsByColorTaki(LinkedList<Card> AvailableCards,LinkedList<Card> myDeck)
 	{
 		LinkedList<Card> cardList=new LinkedList<Card>();
-		specialCardColor Taki=this. HaveSpecialOneColorCardWithCards(AvailableCards,cardType.TAKI);
+		specialCardColor Taki=HaveSpecialOneColorCardWithCards(AvailableCards,cardType.TAKI,myDeck);
 		cardList.addFirst(Taki);
-		LinkedList<Card> temp = copyList(AvailableCards); //copy the cards in the deck hand to new temp list
+		LinkedList<Card> temp =copyList(AvailableCards); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty())
 		{ //check for each card in the deck what it's type
 			Card current = temp.getFirst();
@@ -116,10 +117,10 @@ public class BestCard {
 		return null;
 	}
 	
-	public static LinkedList<Card> ReturnCardsByPlus(LinkedList<Card> AvailableCards)
+	public static LinkedList<Card> ReturnCardsByPlus(LinkedList<Card> AvailableCards,LinkedList<Card> myDeck)
 	{
 		LinkedList<Card> cardList=new LinkedList<Card>();
-		specialCardColor Plus=this. HaveSpecialOneColorCardWithCards(AvailableCards,cardType.PLUS);
+		specialCardColor Plus=HaveSpecialOneColorCardWithCards(AvailableCards,cardType.PLUS,myDeck);
 		cardList.addFirst(Plus);
 		//System.out.println(Plus);
 		LinkedList<Card> temp = copyList(AvailableCards); //copy the cards in the deck hand to new temp list
@@ -164,4 +165,15 @@ public class BestCard {
 		}
 		return count;
 	}
+	
+	public static LinkedList<Card> copyList(LinkedList<Card> list){
+		LinkedList<Card> newList=new LinkedList<Card>();
+		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
+			Card card=iter.next();
+			newList.addLast(card);
+			}
+		return newList;
+		
+	}
+	
 }
