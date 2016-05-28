@@ -26,13 +26,13 @@ public class AvailableCards {
 		//}
 	}
 	
-	public static LinkedList<Card >getAvailableByNoColorCard(specialCardNoColor sCard) //return list of card witch can put on speicialNoColor card
+	public static LinkedList<Card >getAvailableByNoColorCard(specialCardNoColor sCard,LinkedList<Card> myDeck) //return list of card witch can put on speicialNoColor card
 	{
 		if (sCard.getType().equals(cardType.COLOR)||sCard.getType().equals(cardType.SUPER))
 		{
 			//after this card is put by the user, the RoboTaki ask to choose color with button
 			//TODO get color by click on button
-			return getAvailableCardsByColor(getColorsInput());///get the color from input by buttons 
+			return getAvailableCardsByColor(getColorsInput(),myDeck);///get the color from input by buttons 
 		}
 		return null;
 	}
@@ -51,10 +51,10 @@ public class AvailableCards {
 		}
 	}
 	
-	public static LinkedList<Card> getAvailableCardsByColor(Colors color) //Get all the cards from this color and SuperTaki and Change Color
+	public static LinkedList<Card> getAvailableCardsByColor(Colors color,LinkedList<Card> myDeck) //Get all the cards from this color and SuperTaki and Change Color
 	{
 		LinkedList<Card> availableCards=new LinkedList<Card>(); //new list to storw all the available cards
-		LinkedList<Card> temp = copyList(myDeck.getHand()); //copy the cards in the deck hand to new temp list
+		LinkedList<Card> temp = copyList(myDeck); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty()) 
 		{ //check for each card in the deck what it's type
 			
