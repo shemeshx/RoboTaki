@@ -62,7 +62,7 @@ public class RobotTaki {
 		}
 		else if(card instanceof specialCardNoColor)
 		{
-			avaiableCards=AvailableCards.getAvailableByNoColorCard((specialCardNoColor)card);
+			avaiableCards=AvailableCards.getAvailableByNoColorCard((specialCardNoColor)card,this.myDeck.getHand());
 		}
 		else if(card instanceof numberCard) //if the card is number card
 		{
