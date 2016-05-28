@@ -1,6 +1,6 @@
 package Game;
 
-import java.util.LinkedList;
+import java.util.LinkedList ;
 import java.util.ListIterator;
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ import Cards.specialCardNoColor;
 
 public class AvailableCards {
 	
-	public static LinkedList<Card >getAvailableBySpecialColorCard(specialCardColor sCard,LinkedList<Card> myDeck) //return list of card witch can put on speicialNoColor card
+	public static LinkedList <Card >getAvailableBySpecialColorCard(specialCardColor sCard,LinkedList <Card> myDeck) //return list of card witch can put on speicialNoColor card
 	{
 		//if(sCard.getType().equals(cardType.STOP))
 		//{
@@ -26,7 +26,7 @@ public class AvailableCards {
 		//}
 	}
 	
-	public static LinkedList<Card >getAvailableByNoColorCard(specialCardNoColor sCard,LinkedList<Card> myDeck) //return list of card witch can put on speicialNoColor card
+	public static LinkedList <Card >getAvailableByNoColorCard(specialCardNoColor sCard,LinkedList <Card> myDeck) //return list of card witch can put on speicialNoColor card
 	{
 		if (sCard.getType().equals(cardType.COLOR)||sCard.getType().equals(cardType.SUPER))
 		{
@@ -36,12 +36,12 @@ public class AvailableCards {
 		}
 		return null;
 	}
-	public static LinkedList<Card >getAllAvailableCardsByNumberCard(numberCard nCard,LinkedList<Card> myDeck) //return list of card witch can put on numberCArd card
+	public static LinkedList <Card >getAllAvailableCardsByNumberCard(numberCard nCard,LinkedList <Card> myDeck) //return list of card witch can put on numberCArd card
 	{
 		if(nCard.getNumber()==2) //if the number is 2 PLUS
 		{
 			//TODO Get 2 cards from the board
-		    LinkedList<Card> temp=new LinkedList<Card>();
+		    LinkedList <Card> temp=new LinkedList <Card>();
 		    temp.addLast(Search2Plus(myDeck));
 			return null;
 		}
@@ -51,10 +51,10 @@ public class AvailableCards {
 		}
 	}
 	
-	public static LinkedList<Card> getAvailableCardsByColor(Colors color,LinkedList<Card> myDeck) //Get all the cards from this color and SuperTaki and Change Color
+	public static LinkedList <Card> getAvailableCardsByColor(Colors color,LinkedList <Card> myDeck) //Get all the cards from this color and SuperTaki and Change Color
 	{
-		LinkedList<Card> availableCards=new LinkedList<Card>(); //new list to storw all the available cards
-		LinkedList<Card> temp = copyList(myDeck); //copy the cards in the deck hand to new temp list
+		LinkedList <Card> availableCards=new LinkedList <Card>(); //new list to storw all the available cards
+		LinkedList <Card> temp = copyList(myDeck); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty()) 
 		{ //check for each card in the deck what it's type
 			
@@ -80,10 +80,10 @@ public class AvailableCards {
 		return availableCards;
 	}
 	
-	public static LinkedList<Card> getAvailableCards(Card card,LinkedList<Card> myDeck) //return linked list with all the cards tan can place on the corrent ard
+	public static LinkedList <Card> getAvailableCards(Card card,LinkedList <Card> myDeck) //return linked list with all the cards tan can place on the corrent ard
 	{
-		LinkedList<Card> availableCards=new LinkedList<Card>(); //new list to storw all the available cards
-		LinkedList<Card> temp = copyList(myDeck); //copy the cards in the deck hand to new temp list
+		LinkedList <Card> availableCards=new LinkedList <Card>(); //new list to storw all the available cards
+		LinkedList <Card> temp = copyList(myDeck); //copy the cards in the deck hand to new temp list
 		while (!temp.isEmpty()){ //check for each card in the deck what it's type
 		Card current = temp.getFirst();
 		temp.removeFirst();
@@ -130,8 +130,8 @@ public class AvailableCards {
 		return color;
 		
 	}
-	public static LinkedList<Card> copyList(LinkedList<Card> list){
-		LinkedList<Card> newList=new LinkedList<Card>();
+	public static LinkedList <Card> copyList(LinkedList <Card> list){
+		LinkedList <Card> newList=new LinkedList <Card>();
 		for(ListIterator<Card> iter=list.listIterator();iter.hasNext();){
 			Card card=iter.next();
 			newList.addLast(card);
@@ -140,16 +140,16 @@ public class AvailableCards {
 		
 	}
 	
-	public static numberCard Search2Plus(LinkedList<Card> availableCard)
+	public static numberCard Search2Plus(LinkedList <Card> availableCard)
 	{
-		LinkedList<Card> temp = copyList(availableCard); //copy the cards in the deck hand to new temp list
+		LinkedList <Card> temp = copyList(availableCard); //copy the cards in the deck hand to new temp list
 		int counter=0;
 		while (!temp.isEmpty())
 		{ 	//check for each card in the deck what it's type
 			Card current = temp.getFirst();
 			temp.removeFirst();
 			
-				if(current instanceof numberCard&&((numberCard)current).getNumber()==2)) return (numberCard)current;
+				if(current instanceof numberCard&&((numberCard)current).getNumber()==2) return (numberCard)current;
 			else continue;
 		}
 		return null;
