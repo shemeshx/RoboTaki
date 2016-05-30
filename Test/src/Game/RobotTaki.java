@@ -79,7 +79,7 @@ public class RobotTaki {
 			myCard=BestCard.findCardToReturn(avaiableCards,card,this.myDeck.getHand());
 			System.out.println(printList(myCard));
 		}
-		return null;//myCard;
+		return myCard;//myCard;
 	}
 	
 	
