@@ -82,18 +82,40 @@ public class RobotTaki {
 		return myCard;//myCard;
 	}
 	
-	
-	private Colors getColorsInput() //return color value from buttons input.
+
+	public LinkedList<Card> playTurn(Card card,Colors color)//getting card of type - change color and getting the color that the user choose.
 	{
 		/*
+		 * this method get the current card witch put on the table
+		 * the method find the type of the card and find  all the cards in the dack witch can put on this card
+		 * from this list the method find the best card to return
 		 * 
-		 * change scanner line to raspbery input method of buttons!!!!!!!!!!!
+		 * if return null seems that cant return any card like in case of the card on the table is stop or 2+
 		 * 
-		 * */
-		Colors color=Colors.valueOf((new Scanner(System.in).nextLine()).toUpperCase());
+		 * if the list returns eampty so there is no available card and need to take card from the bank
+		 *
+		 */
+		LinkedList<Card> myCard = null; //card to pop from the dackhand
+		LinkedList<Card>avaiableCards=null;
+		//System.out.println(myDeck);
+		//System.out.println(card);
+		if(card instanceof specialCardNoColor) 
+		{
+			avaiableCards=AvailableCards.getAvailableCardsByColor(color,this.myDeck.getHand());
+			System.out.println(printList(avaiableCards));
+		}
 		
-		return color;
-		
+		if(avaiableCards==null)
+		{ 
+			myCard=null; //if can;t return card (skip the turn)
+			System.out.println("NO CARDS AVAILABLE");
+		}
+		else //find the best card to return
+		{
+			myCard=BestCard.findCardToReturn(avaiableCards,card,this.myDeck.getHand());
+			System.out.println(printList(myCard));
+		}
+		return myCard;//myCard;
 	}
 	
 	
